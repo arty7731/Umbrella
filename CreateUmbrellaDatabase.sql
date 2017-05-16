@@ -1,0 +1,97 @@
+DROP DATABASE Umbrella;
+CREATE DATABASE Umbrella;
+
+GO
+
+use Umbrella;
+
+GO
+
+CREATE TABLE [Account] (
+ [Id]INTPRIMARY KEY IDENTITY,
+ [FullName]NVARCHAR (128) NOT NULL,
+ [Login]NVARCHAR (128) NOT NULL,
+ [Password]NVARCHAR (128) NOT NULL,
+ [Email]NVARCHAR (128) NOT NULL,
+ [Status] INTDEFAULT ((0)) NOT NULL
+);
+
+GO
+
+CREATE TABLE [Project] (
+ [Id] INT PRIMARY KEY IDENTITY,
+ [Name]NVARCHAR (128) NOT NULL,
+ [Description] NVARCHAR (1024) NULL,
+ [DateStart] DATETIME NOT NULL,
+ [ProjectStatusId] INT,
+ [Owner] INT FOREIGN KEY ([Owner]) REFERENCES [Account] ([Id]) ON DELETE SET NULL ON UPDATE CASCADE 
+);
+
+GO
+
+CREATE TABLE [TaskStatus] (
+ [Id] INT PRIMARY KEY IDENTITY,
+ [Name] NVARCHAR (64) NOT NULL,
+ [Project] INT FOREIGN KEY ([Project]) REFERENCES [Project] ([Id]),
+);
+
+GO
+
+CREATE TABLE [ProjectStatus] (
+ [Id]INT PRIMARY KEY IDENTITY,
+ [Name]NVARCHAR (64) NOT NULL,
+ [Project]	 INTNULL FOREIGN KEY ([Project]) REFERENCES [Project] ([Id]),
+);
+
+GO
+
+CREATE TABLE [Task] (
+ [Id] INT PRIMARY KEY IDENTITY,
+ [Name] NVARCHAR (256) DEFAULT ('Task') NOT NULL,
+ [Description] NVARCHAR (2048),
+ [ProjectId] INT FOREIGN KEY ([ProjectId]) REFERENCES [Project] ([Id]) ON DELETE SET NULL ON UPDATE CASCADE,
+ [TaskStatusId] INT FOREIGN KEY ([TaskStatusId]) REFERENCES [TaskStatus] ([Id]) ON DELETE SET NULL ON UPDATE CASCADE,
+ [CurrentExecutor] INT FOREIGN KEY ([CurrentExecutor]) REFERENCES [Account] ([Id])
+);
+
+GO
+
+CREATE TABLE [Comment] (
+ [Id]INT PRIMARY KEY IDENTITY,
+ [Text] NVARCHAR (2048) DEFAULT ('Empty comment') NOT NULL,
+ [Owner]INT FOREIGN KEY ([Owner]) REFERENCES [Account] ([Id]) ON DELETE SET NULL ON UPDATE CASCADE,
+ [TaskId] INT FOREIGN KEY ([TaskId]) REFERENCES [Task] ([Id]) ON DELETE SET NULL,
+ [DatePublic] DATETIME DEFAULT (getdate()) NOT NULL 
+);
+
+GO
+
+CREATE TABLE [History] (
+ [Id] INT PRIMARY KEY IDENTITY,
+ [Action] NVARCHAR (2048) NOT NULL,
+ [Date]DATETIME DEFAULT (getdate()) NOT NULL
+);
+
+GO
+
+CREATE TABLE [AccountsTasks] (
+ [Id]INT PRIMARY KEY IDENTITY,
+ [Account] INT FOREIGN KEY ([Account]) REFERENCES [Account] ([Id]) ON DELETE SET NULL,
+ [Task] INT FOREIGN KEY ([Task]) REFERENCES [Task] ([Id]) ON DELETE SET NULL
+);
+
+GO
+
+CREATE TABLE [AccountsProjects] (
+ [Id]INT PRIMARY KEY IDENTITY,
+ [Account] INT FOREIGN KEY ([Account]) REFERENCES [Account] ([Id]) ON DELETE SET NULL,
+ [Project] INT FOREIGN KEY ([Project]) REFERENCES [Project] ([Id]) ON DELETE SET NULL
+);
+
+GO
+
+CREATE TABLE [AccountHistory] (
+ [Id]INT PRIMARY KEY IDENTITY,
+ [Account] INT FOREIGN KEY ([Account]) REFERENCES [Account] ([Id]) ON DELETE SET NULL,
+ [History] INT FOREIGN KEY ([History]) REFERENCES [History] ([Id]) ON DELETE SET NULL
+);

@@ -1,0 +1,84 @@
+﻿<Window x:Class="Umbrella.TaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Umbrella"
+        mc:Ignorable="d"
+        Title="TaskWindow" Height="640" Width="700">
+    <DockPanel Background="AliceBlue">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <GroupBox Name="gbExecutors" IsEnabled="False" Background="White" Margin="5" Grid.Column="1" Header="Executors:">
+                <DockPanel >
+                    <WrapPanel DockPanel.Dock="Top" Margin="5">
+                        <Button Name="btnExecutorAdd" Margin="5 0" Click="btnExecutorAdd_Click">Add</Button>
+                        <Button Name="btnExecutorDelete" Margin="5 0" Click="btnExecutorDelete_Click">Delete</Button>
+                    </WrapPanel>
+                    <ListView DockPanel.Dock="Top" Margin="5 0" Name="lvExecutorList" SelectionChanged="lvExecutorList_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Login" DisplayMemberBinding="{Binding Login}"></GridViewColumn>
+                                <GridViewColumn Header="Fullname" DisplayMemberBinding="{Binding FullName}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </GroupBox>
+            <DockPanel>
+                <GroupBox Background="White" Margin="5" Header="Task information:" DockPanel.Dock="Top">
+                    <StackPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Name:</Label>
+                            <TextBox Margin="10 5" Width="280" Name="tbTaskName"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Description:</Label>
+                            <TextBox Margin="10 5" Width="280" Height="100" Name="tbTaskDescription" ScrollViewer.VerticalScrollBarVisibility="Visible" AcceptsReturn="true" TextWrapping="Wrap"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Status:</Label>
+                            <ComboBox Margin="10 5" Width="280" Name="cbTaskStatus" DropDownClosed="cbTaskStatus_DropDownClosed"></ComboBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Executor:</Label>
+                            <Label Margin="10 5" Width="280"  Name="lblExecutor"></Label>
+                        </WrapPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Background="White" Margin="5" DockPanel.Dock="Top" Header="Comments:">
+                    <StackPanel>
+                        <ListBox Name="lbTaskComment" Margin="10 5" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="140">
+                            
+                        </ListBox>
+                        <ListView Name="lvTaskComment" Visibility="Collapsed" Margin="10 5" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="140">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Owner.Login}"></GridViewColumn>
+                                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DatePublic}"></GridViewColumn>
+                                    <GridViewColumn Header="Message" DisplayMemberBinding="{Binding Text}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Separator></Separator>
+                        <WrapPanel>
+                            <TextBox Name="tbCurrentComment" KeyDown="tbCurrentComment_KeyDown" Height="60" Width="320" Margin="10 5" ScrollViewer.VerticalScrollBarVisibility="Visible" AcceptsReturn="true" TextWrapping="Wrap"></TextBox>
+                            <Button Name="btnCommentAdd" Click="btnCommentAdd_Click" IsEnabled="False" HorizontalAlignment="Right" Margin="10 5" VerticalAlignment="Top" Height="30" Width="70">Comment</Button>
+                        </WrapPanel>
+                    </StackPanel>
+                </GroupBox>
+
+            </DockPanel>
+
+        </Grid>
+        <WrapPanel Name="wpButtonPanel" Visibility="Visible" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Height="30">
+            <Label BorderBrush="Orange" FontSize="16" Height="30" Width="520" Margin="10 0" Background="Bisque" Foreground="OrangeRed">Attention!  Editing of executors and status is saved automatically!</Label>
+            <Button Name="btnSave" Margin="5 0" Click="btnSave_Click" FontSize="16">Save</Button>
+            <Button Name="btnCancel" IsCancel="True" Margin="5 0" FontSize="16">Cancel</Button>
+        </WrapPanel>
+    </DockPanel>
+
+</Window>

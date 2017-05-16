@@ -1,0 +1,29 @@
+﻿<Window x:Class="Umbrella.SelectAccountWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Umbrella"
+        mc:Ignorable="d"
+        Title="SelectAccountWindows" Height="300" Width="200" WindowStyle="None">
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label>Select accounts:</Label>
+        <ListView Name="lvAccountList" Grid.Row="1" Margin="5">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Login" DisplayMemberBinding="{Binding Login}"></GridViewColumn>
+                    <GridViewColumn Header="Fullname" DisplayMemberBinding="{Binding FullName}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right">
+            <Button Name="btnAdd" Margin="5" Click="btnAdd_Click">Add</Button>
+            <Button IsCancel="True" Margin="5">Cancel</Button>
+        </WrapPanel>
+    </Grid>
+</Window>

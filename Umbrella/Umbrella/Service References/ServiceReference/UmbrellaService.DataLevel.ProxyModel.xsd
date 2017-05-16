@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/UmbrellaService.DataLevel.ProxyModel" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UmbrellaService.DataLevel.ProxyModel" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/UmbrellaService" />
+  <xs:complexType name="AccountProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/UmbrellaService" minOccurs="0" name="Status" type="q1:AccountStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountProxy" nillable="true" type="tns:AccountProxy" />
+  <xs:complexType name="ProjectProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateStart" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Owner" nillable="true" type="tns:AccountProxy" />
+      <xs:element minOccurs="0" name="ProjectStatus" nillable="true" type="tns:ProjectStatusProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectProxy" nillable="true" type="tns:ProjectProxy" />
+  <xs:complexType name="ProjectStatusProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectStatusProxy" nillable="true" type="tns:ProjectStatusProxy" />
+  <xs:complexType name="ArrayOfProjectProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProjectProxy" nillable="true" type="tns:ProjectProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProjectProxy" nillable="true" type="tns:ArrayOfProjectProxy" />
+  <xs:complexType name="TaskProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Executor" nillable="true" type="tns:AccountProxy" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Project" nillable="true" type="tns:ProjectProxy" />
+      <xs:element minOccurs="0" name="TaskStatus" nillable="true" type="tns:TaskStatusProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TaskProxy" nillable="true" type="tns:TaskProxy" />
+  <xs:complexType name="TaskStatusProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TaskStatusProxy" nillable="true" type="tns:TaskStatusProxy" />
+  <xs:complexType name="ArrayOfTaskProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TaskProxy" nillable="true" type="tns:TaskProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTaskProxy" nillable="true" type="tns:ArrayOfTaskProxy" />
+  <xs:complexType name="CommentProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DatePublic" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Owner" nillable="true" type="tns:AccountProxy" />
+      <xs:element minOccurs="0" name="Task" nillable="true" type="tns:TaskProxy" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CommentProxy" nillable="true" type="tns:CommentProxy" />
+  <xs:complexType name="ArrayOfCommentProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CommentProxy" nillable="true" type="tns:CommentProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCommentProxy" nillable="true" type="tns:ArrayOfCommentProxy" />
+  <xs:complexType name="ArrayOfAccountProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountProxy" nillable="true" type="tns:AccountProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountProxy" nillable="true" type="tns:ArrayOfAccountProxy" />
+  <xs:complexType name="ArrayOfProjectStatusProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProjectStatusProxy" nillable="true" type="tns:ProjectStatusProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProjectStatusProxy" nillable="true" type="tns:ArrayOfProjectStatusProxy" />
+  <xs:complexType name="ArrayOfTaskStatusProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TaskStatusProxy" nillable="true" type="tns:TaskStatusProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTaskStatusProxy" nillable="true" type="tns:ArrayOfTaskStatusProxy" />
+  <xs:complexType name="HistoryProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HistoryProxy" nillable="true" type="tns:HistoryProxy" />
+  <xs:complexType name="ArrayOfHistoryProxy">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HistoryProxy" nillable="true" type="tns:HistoryProxy" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHistoryProxy" nillable="true" type="tns:ArrayOfHistoryProxy" />
+</xs:schema>

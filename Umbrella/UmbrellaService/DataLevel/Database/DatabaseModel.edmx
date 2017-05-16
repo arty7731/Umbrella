@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UmbrellaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account" Type="int" />
+          <Property Name="History" Type="int" />
+        </EntityType>
+        <EntityType Name="AccountsProjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account" Type="int" />
+          <Property Name="Project" Type="int" />
+        </EntityType>
+        <EntityType Name="AccountsTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account" Type="int" />
+          <Property Name="Task" Type="int" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="Owner" Type="int" />
+          <Property Name="TaskId" Type="int" />
+          <Property Name="DatePublic" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Action" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1024" />
+          <Property Name="DateStart" Type="datetime" Nullable="false" />
+          <Property Name="ProjectStatusId" Type="int" />
+          <Property Name="Owner" Type="int" />
+        </EntityType>
+        <EntityType Name="ProjectStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Project" Type="int" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2048" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="TaskStatusId" Type="int" />
+          <Property Name="CurrentExecutor" Type="int" />
+        </EntityType>
+        <EntityType Name="TaskStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Project" Type="int" />
+        </EntityType>
+        <Association Name="FK__AccountHi__Accou__44FF419A">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="AccountHistory" Type="Self.AccountHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountHistory">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountHi__Histo__45F365D3">
+          <End Role="History" Type="Self.History" Multiplicity="0..1" />
+          <End Role="AccountHistory" Type="Self.AccountHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="History">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountHistory">
+              <PropertyRef Name="History" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsP__Accou__412EB0B6">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="AccountsProjects" Type="Self.AccountsProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsProjects">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsP__Proje__4222D4EF">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="AccountsProjects" Type="Self.AccountsProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsProjects">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsT__Accou__3D5E1FD2">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="AccountsTasks" Type="Self.AccountsTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsTasks">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsTa__Task__3E52440B">
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="AccountsTasks" Type="Self.AccountsTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsTasks">
+              <PropertyRef Name="Task" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Owner__35BCFE0A">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__TaskId__36B12243">
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Project__Owner__267ABA7A">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProjectSt__Proje__2C3393D0">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="ProjectStatus" Type="Self.ProjectStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectStatus">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__CurrentExe__31EC6D26">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="CurrentExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__ProjectId__300424B4">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__TaskStatus__30F848ED">
+          <End Role="TaskStatus" Type="Self.TaskStatus" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="TaskStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskStatu__Proje__29572725">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="TaskStatus" Type="Self.TaskStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaskStatus">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UmbrellaModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountHistory" EntityType="Self.AccountHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountsProjects" EntityType="Self.AccountsProjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountsTasks" EntityType="Self.AccountsTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectStatus" EntityType="Self.ProjectStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskStatus" EntityType="Self.TaskStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AccountHi__Accou__44FF419A" Association="Self.FK__AccountHi__Accou__44FF419A">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountHistory" EntitySet="AccountHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountHi__Histo__45F365D3" Association="Self.FK__AccountHi__Histo__45F365D3">
+            <End Role="History" EntitySet="History" />
+            <End Role="AccountHistory" EntitySet="AccountHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsP__Accou__412EB0B6" Association="Self.FK__AccountsP__Accou__412EB0B6">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountsProjects" EntitySet="AccountsProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsP__Proje__4222D4EF" Association="Self.FK__AccountsP__Proje__4222D4EF">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="AccountsProjects" EntitySet="AccountsProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsT__Accou__3D5E1FD2" Association="Self.FK__AccountsT__Accou__3D5E1FD2">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountsTasks" EntitySet="AccountsTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsTa__Task__3E52440B" Association="Self.FK__AccountsTa__Task__3E52440B">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="AccountsTasks" EntitySet="AccountsTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Owner__35BCFE0A" Association="Self.FK__Comment__Owner__35BCFE0A">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__TaskId__36B12243" Association="Self.FK__Comment__TaskId__36B12243">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Project__Owner__267ABA7A" Association="Self.FK__Project__Owner__267ABA7A">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Project" EntitySet="Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProjectSt__Proje__2C3393D0" Association="Self.FK__ProjectSt__Proje__2C3393D0">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectStatus" EntitySet="ProjectStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__CurrentExe__31EC6D26" Association="Self.FK__Task__CurrentExe__31EC6D26">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__ProjectId__300424B4" Association="Self.FK__Task__ProjectId__300424B4">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__TaskStatus__30F848ED" Association="Self.FK__Task__TaskStatus__30F848ED">
+            <End Role="TaskStatus" EntitySet="TaskStatus" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskStatu__Proje__29572725" Association="Self.FK__TaskStatu__Proje__29572725">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="TaskStatus" EntitySet="TaskStatus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UmbrellaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccountHistories" Relationship="Self.FK__AccountHi__Accou__44FF419A" FromRole="Account" ToRole="AccountHistory" />
+          <NavigationProperty Name="AccountsProjects" Relationship="Self.FK__AccountsP__Accou__412EB0B6" FromRole="Account" ToRole="AccountsProjects" />
+          <NavigationProperty Name="AccountsTasks" Relationship="Self.FK__AccountsT__Accou__3D5E1FD2" FromRole="Account" ToRole="AccountsTasks" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__Owner__35BCFE0A" FromRole="Account" ToRole="Comment" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK__Project__Owner__267ABA7A" FromRole="Account" ToRole="Project" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK__Task__CurrentExe__31EC6D26" FromRole="Account" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="AccountHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="Int32" />
+          <Property Name="History" Type="Int32" />
+          <NavigationProperty Name="Account1" Relationship="Self.FK__AccountHi__Accou__44FF419A" FromRole="AccountHistory" ToRole="Account" />
+          <NavigationProperty Name="History1" Relationship="Self.FK__AccountHi__Histo__45F365D3" FromRole="AccountHistory" ToRole="History" />
+        </EntityType>
+        <EntityType Name="AccountsProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="Int32" />
+          <Property Name="Project" Type="Int32" />
+          <NavigationProperty Name="Account1" Relationship="Self.FK__AccountsP__Accou__412EB0B6" FromRole="AccountsProjects" ToRole="Account" />
+          <NavigationProperty Name="Project1" Relationship="Self.FK__AccountsP__Proje__4222D4EF" FromRole="AccountsProjects" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="AccountsTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="Int32" />
+          <Property Name="Task" Type="Int32" />
+          <NavigationProperty Name="Account1" Relationship="Self.FK__AccountsT__Accou__3D5E1FD2" FromRole="AccountsTasks" ToRole="Account" />
+          <NavigationProperty Name="Task1" Relationship="Self.FK__AccountsTa__Task__3E52440B" FromRole="AccountsTasks" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Owner" Type="Int32" />
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="DatePublic" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Comment__Owner__35BCFE0A" FromRole="Comment" ToRole="Account" />
+          <NavigationProperty Name="Task" Relationship="Self.FK__Comment__TaskId__36B12243" FromRole="Comment" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Action" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AccountHistories" Relationship="Self.FK__AccountHi__Histo__45F365D3" FromRole="History" ToRole="AccountHistory" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProjectStatusId" Type="Int32" />
+          <Property Name="Owner" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Project__Owner__267ABA7A" FromRole="Project" ToRole="Account" />
+          <NavigationProperty Name="AccountsProjects" Relationship="Self.FK__AccountsP__Proje__4222D4EF" FromRole="Project" ToRole="AccountsProjects" />
+          <NavigationProperty Name="ProjectStatus" Relationship="Self.FK__ProjectSt__Proje__2C3393D0" FromRole="Project" ToRole="ProjectStatus" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK__Task__ProjectId__300424B4" FromRole="Project" ToRole="Task" />
+          <NavigationProperty Name="TaskStatus" Relationship="Self.FK__TaskStatu__Proje__29572725" FromRole="Project" ToRole="TaskStatus" />
+        </EntityType>
+        <EntityType Name="ProjectStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Project" Type="Int32" />
+          <NavigationProperty Name="Project1" Relationship="Self.FK__ProjectSt__Proje__2C3393D0" FromRole="ProjectStatus" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="TaskStatusId" Type="Int32" />
+          <Property Name="CurrentExecutor" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Task__CurrentExe__31EC6D26" FromRole="Task" ToRole="Account" />
+          <NavigationProperty Name="AccountsTasks" Relationship="Self.FK__AccountsTa__Task__3E52440B" FromRole="Task" ToRole="AccountsTasks" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__TaskId__36B12243" FromRole="Task" ToRole="Comment" />
+          <NavigationProperty Name="Project" Relationship="Self.FK__Task__ProjectId__300424B4" FromRole="Task" ToRole="Project" />
+          <NavigationProperty Name="TaskStatu" Relationship="Self.FK__Task__TaskStatus__30F848ED" FromRole="Task" ToRole="TaskStatus" />
+        </EntityType>
+        <EntityType Name="TaskStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Project" Type="Int32" />
+          <NavigationProperty Name="Project1" Relationship="Self.FK__TaskStatu__Proje__29572725" FromRole="TaskStatus" ToRole="Project" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK__Task__TaskStatus__30F848ED" FromRole="TaskStatus" ToRole="Task" />
+        </EntityType>
+        <Association Name="FK__AccountHi__Accou__44FF419A">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="AccountHistory" Type="Self.AccountHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountHistory">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsP__Accou__412EB0B6">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="AccountsProjects" Type="Self.AccountsProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsProjects">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsT__Accou__3D5E1FD2">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="AccountsTasks" Type="Self.AccountsTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsTasks">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Owner__35BCFE0A">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Project__Owner__267ABA7A">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__CurrentExe__31EC6D26">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="CurrentExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountHi__Histo__45F365D3">
+          <End Role="History" Type="Self.History" Multiplicity="0..1" />
+          <End Role="AccountHistory" Type="Self.AccountHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="History">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountHistory">
+              <PropertyRef Name="History" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsP__Proje__4222D4EF">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="AccountsProjects" Type="Self.AccountsProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsProjects">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountsTa__Task__3E52440B">
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="AccountsTasks" Type="Self.AccountsTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountsTasks">
+              <PropertyRef Name="Task" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__TaskId__36B12243">
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProjectSt__Proje__2C3393D0">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="ProjectStatus" Type="Self.ProjectStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectStatus">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__ProjectId__300424B4">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskStatu__Proje__29572725">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="TaskStatus" Type="Self.TaskStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaskStatus">
+              <PropertyRef Name="Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__TaskStatus__30F848ED">
+          <End Role="TaskStatus" Type="Self.TaskStatu" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="TaskStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="AccountHistories" EntityType="Self.AccountHistory" />
+          <EntitySet Name="AccountsProjects" EntityType="Self.AccountsProject" />
+          <EntitySet Name="AccountsTasks" EntityType="Self.AccountsTask" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Histories" EntityType="Self.History" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="ProjectStatus" EntityType="Self.ProjectStatu" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="TaskStatus" EntityType="Self.TaskStatu" />
+          <AssociationSet Name="FK__AccountHi__Accou__44FF419A" Association="Self.FK__AccountHi__Accou__44FF419A">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="AccountHistory" EntitySet="AccountHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsP__Accou__412EB0B6" Association="Self.FK__AccountsP__Accou__412EB0B6">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="AccountsProjects" EntitySet="AccountsProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsT__Accou__3D5E1FD2" Association="Self.FK__AccountsT__Accou__3D5E1FD2">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="AccountsTasks" EntitySet="AccountsTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Owner__35BCFE0A" Association="Self.FK__Comment__Owner__35BCFE0A">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Project__Owner__267ABA7A" Association="Self.FK__Project__Owner__267ABA7A">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__CurrentExe__31EC6D26" Association="Self.FK__Task__CurrentExe__31EC6D26">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountHi__Histo__45F365D3" Association="Self.FK__AccountHi__Histo__45F365D3">
+            <End Role="History" EntitySet="Histories" />
+            <End Role="AccountHistory" EntitySet="AccountHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsP__Proje__4222D4EF" Association="Self.FK__AccountsP__Proje__4222D4EF">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="AccountsProjects" EntitySet="AccountsProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountsTa__Task__3E52440B" Association="Self.FK__AccountsTa__Task__3E52440B">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="AccountsTasks" EntitySet="AccountsTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__TaskId__36B12243" Association="Self.FK__Comment__TaskId__36B12243">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProjectSt__Proje__2C3393D0" Association="Self.FK__ProjectSt__Proje__2C3393D0">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectStatus" EntitySet="ProjectStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__ProjectId__300424B4" Association="Self.FK__Task__ProjectId__300424B4">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskStatu__Proje__29572725" Association="Self.FK__TaskStatu__Proje__29572725">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="TaskStatus" EntitySet="TaskStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__TaskStatus__30F848ED" Association="Self.FK__Task__TaskStatus__30F848ED">
+            <End Role="TaskStatus" EntitySet="TaskStatus" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UmbrellaModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="UmbrellaModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountHistories">
+            <EntityTypeMapping TypeName="UmbrellaModel.AccountHistory">
+              <MappingFragment StoreEntitySet="AccountHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="History" ColumnName="History" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountsProjects">
+            <EntityTypeMapping TypeName="UmbrellaModel.AccountsProject">
+              <MappingFragment StoreEntitySet="AccountsProjects">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountsTasks">
+            <EntityTypeMapping TypeName="UmbrellaModel.AccountsTask">
+              <MappingFragment StoreEntitySet="AccountsTasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="UmbrellaModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="DatePublic" ColumnName="DatePublic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Histories">
+            <EntityTypeMapping TypeName="UmbrellaModel.History">
+              <MappingFragment StoreEntitySet="History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="UmbrellaModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="ProjectStatusId" ColumnName="ProjectStatusId" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectStatus">
+            <EntityTypeMapping TypeName="UmbrellaModel.ProjectStatu">
+              <MappingFragment StoreEntitySet="ProjectStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="UmbrellaModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="TaskStatusId" ColumnName="TaskStatusId" />
+                <ScalarProperty Name="CurrentExecutor" ColumnName="CurrentExecutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskStatus">
+            <EntityTypeMapping TypeName="UmbrellaModel.TaskStatu">
+              <MappingFragment StoreEntitySet="TaskStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

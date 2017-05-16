@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/UmbrellaService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/UmbrellaService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="AccountStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Offline" />
+      <xs:enumeration value="Online" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AccountStatus" nillable="true" type="tns:AccountStatus" />
+</xs:schema>

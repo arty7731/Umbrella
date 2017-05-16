@@ -1,0 +1,55 @@
+﻿<Window x:Class="Umbrella.AuthorizationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Umbrella"
+        mc:Ignorable="d"
+        Title="AuthorizationWindow"  Height="320" Width="512" WindowStyle="None">
+    <TabControl Background="AliceBlue">
+        <TabControl.Resources>
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Height" Value="30"></Setter>
+                <Setter Property="Background" Value="SteelBlue"></Setter>
+                <Setter Property="FontSize" Value="14"></Setter>
+            </Style>
+        </TabControl.Resources>
+        <TabItem Header="SignIn" >
+            <StackPanel>
+                <WrapPanel Margin="5">
+                    <Label Margin="5" MinWidth="150">Login:</Label>
+                    <TextBox Name="tbSignInLogin" Margin="5" MinWidth="300"></TextBox>
+                </WrapPanel>
+                <WrapPanel Margin="5">
+                    <Label Margin="5" MinWidth="150">Password:</Label>
+                    <PasswordBox Name="pbSignInPassword" Margin="5" MinWidth="300"></PasswordBox>
+                </WrapPanel>
+                <Button Name="btnSignIn" Click="btnSignIn_Click" Margin="10 5">SignIn</Button>
+                <Button Name="btnSignInExit" Click="btnSignInExit_Click" Margin="10 5">Exit</Button>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="SignUp">
+            <StackPanel>
+                <WrapPanel Margin="5">
+                    <Label MinWidth="130" Margin="5">Login:</Label>
+                    <TextBox Name="tbSignUpLogin" MinWidth="320"></TextBox>
+                </WrapPanel>
+                <WrapPanel Margin="5">
+                    <Label MinWidth="130" Margin="5">Password:</Label>
+                    <PasswordBox Name="pbSignUpPassword" MinWidth="320"></PasswordBox>
+                </WrapPanel>
+                <WrapPanel Margin="5">
+                    <Label MinWidth="130" Margin="5">FullName:</Label>
+                    <TextBox Name="tbSignUpFullName" MinWidth="320"></TextBox>
+                </WrapPanel>
+                <WrapPanel Margin="5">
+                    <Label MinWidth="130" Margin="5">Email:</Label>
+                    <TextBox Name="tbSignUpEmail" MinWidth="320"></TextBox>
+                </WrapPanel>
+                <Button Name="btnSignUp" Click="btnSignUp_Click" Margin="20 5">SignUp</Button>
+                <Button Name="btnSignUpExit" Click="btnSignUpExit_Click" Margin="20 5">Exit</Button>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+
+</Window>

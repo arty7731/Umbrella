@@ -1,0 +1,24 @@
+﻿<Window x:Class="Umbrella.CreateStatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Umbrella"
+        mc:Ignorable="d"
+        Title="CreateStatusWindow" Height="120" Width="300"  WindowStyle="None">
+    <StackPanel Background="AliceBlue">
+        <WrapPanel>
+            <Label Margin="10 5">Select status type:</Label>
+            <RadioButton Name="rbprojectStatus" IsChecked="True" Margin="10 5">Project</RadioButton>
+            <RadioButton Name="rbTaskStatus" Margin="10 5">Task</RadioButton>
+        </WrapPanel>
+        <WrapPanel>
+            <Label Margin="10 5">Name:</Label>
+            <TextBox Name="tbStatusName" Width="200" Margin="10 5" KeyDown="tbStatusName_KeyDown"></TextBox>
+        </WrapPanel>
+        <WrapPanel HorizontalAlignment="Right">
+            <Button IsEnabled="False" Name="btnSave" Click="btnSave_Click" Margin="5">Add</Button>
+            <Button IsCancel="True"  Margin="5">Cancel</Button>
+        </WrapPanel>
+    </StackPanel>
+</Window>

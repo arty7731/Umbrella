@@ -1,0 +1,114 @@
+﻿<Window x:Class="Umbrella.ProjectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Umbrella"
+        mc:Ignorable="d"
+        Title="ProjectWindow" MinHeight="530" MinWidth="768" MaxHeight="530" MaxWidth="768"  WindowStyle="ThreeDBorderWindow">
+    <DockPanel Background="AliceBlue">
+           <Grid DockPanel.Dock="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+            <DockPanel>
+                <GroupBox Background="White" DockPanel.Dock="Top" Margin="5" Header="Project information">
+                    <StackPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Name:</Label>
+                            <TextBox Margin="10 5" Width="285" Name="tbProjectName"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Description:</Label>
+                            <TextBox Margin="10 5" ScrollViewer.VerticalScrollBarVisibility="Visible" AcceptsReturn="true" TextWrapping="Wrap" Width="285" MaxHeight="300" MinHeight="100" Name="tbProjectDescription"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Date created:</Label>
+                            <DatePicker Margin="10 5" Width="285" Name="dpProjectDateCreated"></DatePicker>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Owner:</Label>
+                            <Label Margin="10 5" Width="285" Name="lblProjectOwner"></Label>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Margin="10 5" Width="80">Status:</Label>
+                            <ComboBox Name="cbProjectStatus" Margin="10 5" Width="285"></ComboBox>
+                        </WrapPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Background="White" DockPanel.Dock="Top" Margin="5" Header="Status information">
+                    <StackPanel>
+                        <WrapPanel>
+                            <WrapPanel Width="390" Margin="10 0" >
+                                <Button Name="btnStatusAdd" Click="btnStatusAdd_Click" Margin="5 0">Add</Button>
+                                <Button Name="btnStatusEdit" Click="btnStatusEdit_Click" Margin="5 0">Edit</Button>
+                                <Button Name="btnStatusDelete" Click="btnStatusDelete_Click" Margin="5 0">Delete</Button>
+                            </WrapPanel>
+                            <StackPanel Width="180" Margin="10 0">
+                                <Label>Project status:</Label>
+                                <ListView Name="lvProjectStatus" SelectionChanged="lvProjectStatus_SelectionChanged" MinHeight="80"></ListView>
+                            </StackPanel>
+                            <StackPanel Width="180" Margin="10 0">
+                                <Label>Task status:</Label>
+                                <ListView Name="lvTaskStatus" SelectionChanged="lvTaskStatus_SelectionChanged" MinHeight="80"></ListView>
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </GroupBox>
+            </DockPanel>
+            <GroupBox Background="White" Grid.Column="1" Margin="5">
+        <TabControl Grid.Column="1" >
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Background" Value="SteelBlue"></Setter>
+                        <Setter Property="FontSize" Value="14"></Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Task">
+                <DockPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <Button Margin="5 0" Name="btnTaskAdd" Click="btnTaskAdd_Click">Add</Button>
+                            <Button Margin="5 0" Name="btnTaskEdit" Click="btnTaskEdit_Click">Edit</Button>
+                            <Button Margin="5 0" Name="btnTaskDelete" Click="btnTaskDelete_Click">Delete</Button>
+                    </WrapPanel>
+                   <ListView DockPanel.Dock="Top" Margin="5 0" Name="lvTaskList" SelectionChanged="lvTaskList_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Status" DisplayMemberBinding="{Binding TaskStatus.Name}"></GridViewColumn>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                            <GridViewColumn Header="Executor" DisplayMemberBinding="{Binding Executor.FullName}"></GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+                </ListView> 
+                </DockPanel>
+                
+            </TabItem>
+            <TabItem Header="Paticipant">
+                <DockPanel>
+                    <WrapPanel DockPanel.Dock="Top" Margin="5">
+                        <Button Name="btnParticipantAdd" Margin="5 0" Click="btnParticipantAdd_Click">Add</Button>
+                        <Button Name="btnParticipantDelete" Margin="5 0" Click="btnParticipantDelete_Click">Delete</Button>
+                    </WrapPanel>
+                    <ListView DockPanel.Dock="Top" Margin="5 0" Name="lvParticipantList" SelectionChanged="lvParticipantList_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Login" DisplayMemberBinding="{Binding Login}"></GridViewColumn>
+                                <GridViewColumn Header="Fullname" DisplayMemberBinding="{Binding FullName}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                </ListView>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+            </GroupBox>
+    </Grid>
+        <WrapPanel Name="wpButtonPanel" Visibility="Visible" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Height="30">
+            <Label BorderBrush="Orange" FontSize="16" Height="30" Width="595" Margin="10 0" Background="Bisque" Foreground="OrangeRed">Attention!  Editing of tasks, statuses and participants is saved automatically!</Label>
+            <Button Name="btnSave" Margin="5 0" Click="btnSave_Click" FontSize="16">Save</Button>
+            <Button Name="btnCancel" IsCancel="True" Margin="5 0" FontSize="16">Cancel</Button>
+        </WrapPanel>
+    </DockPanel>
+
+</Window>
